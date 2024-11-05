@@ -415,7 +415,7 @@ function extractExif(buf) {
         } else {
           let dpi = 72;
 
-          if (parseInt(metadata["XResolution"] != null)) {
+          if (metadata["XResolution"] != null) {
             dpi = Math.min(
               parseInt(metadata["XResolution"].description),
               parseInt(metadata["YResolution"].description)

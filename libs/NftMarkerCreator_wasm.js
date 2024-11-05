@@ -953,11 +953,7 @@ function getBinary() {
   }
 }
 function getBinaryPromise() {
-  if (
-    !wasmBinary &&
-    (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER) &&
-    typeof fetch === "function"
-  ) {
+  if (!wasmBinary && (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER)) {
     return fetch(wasmBinaryFile, { credentials: "same-origin" })
       .then(function (response) {
         if (!response["ok"]) {
@@ -1009,9 +1005,9 @@ function createWasm() {
   function instantiateAsync() {
     if (
       !wasmBinary &&
+      (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER) &&
       typeof WebAssembly.instantiateStreaming === "function" &&
-      !isDataURI(wasmBinaryFile) &&
-      typeof fetch === "function"
+      !isDataURI(wasmBinaryFile)
     ) {
       fetch(wasmBinaryFile, { credentials: "same-origin" }).then(function (
         response
